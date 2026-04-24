@@ -1,27 +1,28 @@
-export default function HexGrid() {
-  const size = 55;
-  const rows = 18;
-  const cols = 18;
+// HexGrid.jsx — Full-page decorative hexagonal background
 
-  const hex = (x, y) => `
-    ${x},${y - size}
-    ${x + size * 0.87},${y - size / 2}
-    ${x + size * 0.87},${y + size / 2}
-    ${x},${y + size}
-    ${x - size * 0.87},${y + size / 2}
-    ${x - size * 0.87},${y - size / 2}
-  `;
+export default function HexGrid() {
+  const size = 50;
+  const rows = 20;
+  const cols = 22;
+
+  const hexPoints = (x, y) =>
+    [0, 1, 2, 3, 4, 5]
+      .map((i) => {
+        const angle = (Math.PI / 3) * i - Math.PI / 6;
+        return `${x + size * Math.cos(angle)},${y + size * Math.sin(angle)}`;
+      })
+      .join(" ");
 
   return (
-    <svg className="fixed inset-0 w-full h-full z-0 opacity-10">
+    <svg className="fixed inset-0 w-full h-full z-0 opacity-[0.07] pointer-events-none">
       {[...Array(rows)].map((_, r) =>
         [...Array(cols)].map((_, c) => {
-          const x = 80 + c * size * 1.75 + (r % 2) * size * 0.9;
-          const y = 80 + r * size * 1.5;
+          const x = c * size * 1.732 + (r % 2) * size * 0.866;
+          const y = r * size * 1.5;
           return (
             <polygon
               key={`${r}-${c}`}
-              points={hex(x, y)}
+              points={hexPoints(x, y)}
               fill="none"
               stroke="#22c55e"
               strokeWidth="1"

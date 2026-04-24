@@ -1,4 +1,4 @@
-// src/App.jsx
+// App.jsx — Root component
 
 import { useState } from "react";
 import Header from "./components/Header";
@@ -11,19 +11,14 @@ function App() {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#020617] via-black to-[#020617] overflow-hidden text-white">
-      {/* FULL BACKGROUND GRID */}
+      {/* Full-page hex background */}
       <HexGrid />
 
-      {/* CONTENT ABOVE GRID */}
+      {/* Content */}
       <div className="relative z-10">
         <Header />
-        <Tabs
-          activeTab={activeTab}
-          setActiveTab={(tab) => {
-            setActiveTab(tab);
-          }}
-        />
-        <SimulationBox mode={activeTab} />
+        <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+        <SimulationBox mode={activeTab} setMode={setActiveTab} />
       </div>
     </div>
   );
