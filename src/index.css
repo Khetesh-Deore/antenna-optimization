@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Global base styles ===== */
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #020617;
+  color: #ffffff;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
+    'Helvetica Neue', sans-serif;
+}
+
+/* ===== Smooth rendering ===== */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+::-webkit-scrollbar-thumb {
+  background: #1f2933;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+/* ===== Glass + Glow ===== */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ===== STEP 7B: Global Glow Animation ===== */
+@keyframes slowPulse {
+  0% {
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 22px rgba(34, 197, 94, 0.6);
+  }
+  100% {
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.2);
+  }
+}
+
+.glow-animate {
+  animation: slowPulse 3s infinite;
+}
