@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 html, body, #root {
-  height: 100%;
   margin: 0;
   padding: 0;
+  min-height: 100%;
   background-color: #020617;
   color: #ffffff;
   font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-    'Helvetica Neue', sans-serif;
+    'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -20,43 +19,89 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar */
-::-webkit-scrollbar { width: 6px; }
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: #020617; }
 ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 10px; }
 ::-webkit-scrollbar-thumb:hover { background: #22c55e; }
 
-/* Glass morphism */
+/* ── Glass card ── */
 .glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.07);
 }
 
-/* Glow pulse on main card */
+/* ── Glow pulse ── */
 @keyframes slowPulse {
-  0%   { box-shadow: 0 0 0px rgba(34,197,94,0.0); }
-  50%  { box-shadow: 0 0 30px rgba(34,197,94,0.12); }
-  100% { box-shadow: 0 0 0px rgba(34,197,94,0.0); }
+  0%,100% { box-shadow: 0 0 0 rgba(34,197,94,0); }
+  50%      { box-shadow: 0 0 28px rgba(34,197,94,0.10); }
 }
 .glow-animate { animation: slowPulse 4s ease-in-out infinite; }
 
-/* Range input thumb */
-input[type="range"]::-webkit-slider-thumb {
+/* ── Tabular numbers ── */
+.tabular-nums { font-variant-numeric: tabular-nums; }
+
+/* ══════════════════════════════════════════
+   Slider — uses CSS custom properties set
+   inline: --pct (fill %) and --track-color
+══════════════════════════════════════════ */
+.slider-track {
   -webkit-appearance: none;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #22c55e;
-  cursor: pointer;
-  box-shadow: 0 0 6px #22c55e88;
-}
-input[type="range"]::-webkit-slider-runnable-track {
+  appearance: none;
+  width: 100%;
   height: 6px;
   border-radius: 3px;
-  background: #1e293b;
+  outline: none;
+  cursor: pointer;
+  /* two-tone fill: colored left of thumb, dark right */
+  background: linear-gradient(
+    to right,
+    var(--track-color, #22c55e) 0%,
+    var(--track-color, #22c55e) var(--pct, 50%),
+    #1e293b var(--pct, 50%),
+    #1e293b 100%
+  );
+  transition: background 0.08s;
 }
 
-/* Tabular numbers for metrics */
-.tabular-nums { font-variant-numeric: tabular-nums; }
+/* Webkit thumb */
+.slider-track::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid var(--track-color, #22c55e);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--track-color, #22c55e), 0 2px 4px rgba(0,0,0,0.5);
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.slider-track::-webkit-slider-thumb:hover {
+  transform: scale(1.25);
+  box-shadow: 0 0 14px var(--track-color, #22c55e), 0 2px 6px rgba(0,0,0,0.6);
+}
+
+/* Firefox thumb */
+.slider-track::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2.5px solid var(--track-color, #22c55e);
+  cursor: pointer;
+  box-shadow: 0 0 8px var(--track-color, #22c55e);
+}
+
+/* Disabled state */
+.slider-track:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+.slider-track:disabled::-webkit-slider-thumb {
+  background: #475569;
+  border-color: #475569;
+  box-shadow: none;
+  cursor: not-allowed;
+}
